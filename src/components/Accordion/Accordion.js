@@ -5,18 +5,18 @@ import AccordionItem from "./AccordionItem";
 
 class Accordion extends React.Component {
   state = {
-    openItem: null,
+    openItems: [],
   };
 
-  setOpenItem = (openItem) => this.setState({ openItem });
+  setOpenItem = (openItem) => this.setState({ openItems: [openItem] });
 
   render() {
-    const { openItem } = this.state;
+    const { openItems } = this.state;
 
     return (
       <section tw="shadow">
         {this.props.items.map((item) => {
-          const isOpen = item.id === openItem;
+          const isOpen = openItems.includes(item.id);
           return (
             <AccordionItem
               key={item.id}
