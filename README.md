@@ -1,70 +1,86 @@
-# Getting Started with Create React App
+# Effective React ⚛️ Testing 🧪
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Slides
 
-## Available Scripts
+You can get the slides of the talk in the [slides.pdf](/slides.pdf) file.
 
-In the project directory, you can run:
+## How can we increase our confidence in the tests?
 
-### `yarn start`
+We can say that our tests are effective when we have **full confidence** on our universe
+of test cases. But I'm not talking into **false confidence** we might have, I'm talking
+about real confidence that our tests are currently working and they do test our most
+critical functionality **correctly**.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Do not test implementation details
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Most people who learned to make tests in React was taught to test the
+**implementation details** of a component, either because the people who was teaching
+it was doing that way or because that was actually the way that some libraries, such
+as (Enzyme)[https://enzymejs.github.io/enzyme/], encouraged to test the implementation
+details of your components.
 
-### `yarn test`
+Testing implementation details means testing the internal methods or variables of our
+component, isolated of any interaction that may occur.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### False Negatives
 
-### `yarn build`
+Testing implementation details might result in false negatives, specially when you refactor
+a component. This kind of errors may increase the developer fatigue as they will be fixing
+tests that are not actually breaking because the component stopped working correctly,
+but because the test was configured into testing some internal parts of the components
+that changed, the tests will falsely fail.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The time that is invested into fixing tests broken by false negative is basically wasted,
+because neither the stability of the component is being improved, no new tests cases are
+being created and no new value is being built.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### False Positives
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This is the most serious problem that may arise when testing implementation details. You
+may change some behavior in the component, that actually breaks the component, but your
+tests are telling you that everything is working perfectly and no test breaks.
 
-### `yarn eject`
+This is what I was referring about having **false confidence** in your tests.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Let's change the paradigm
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Instead of testing the components by isolating its methods, its state, etc. Let's think
+the following: **Who are the users of my application and how are they going to interact**
+**with my component?**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Thinking this way will be very helpful as we will be able to test our components the way
+our users are going to be using them.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+You can see the difference of testing paradigm by comparing the implementation of these
+two files:
 
-## Learn More
+- 📄 [Accordion/**tests**/Accordion.enzyme.js](src/components/Accordion/__tests__/Accordion.enzyme.js)
+- 📄 [Accordion/**tests**/Accordion.rtl.js](src/components/Accordion/__tests__/Accordion.rtl.js)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+_There is also an implementation using `react-test-renderer` that you can take a look_
+_in the [tests folder](src/components/Accordion/__tests__/)_
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Testing Checklist
 
-### Code Splitting
+[ ] **Which part of the codebase will be really bad if it broke?** Let's face it, not
+all parts of our application is important for the business, is testing those parts a
+correct use of your time or can you be adding value elsewhere in your application?
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+[ ] **Reduce test cases into units**: Test individual use cases in every test case, do
+not try to pack every use case of your application into single test cases, this will make
+difficult to find the problem in case the tests case fails.
 
-### Analyzing the Bundle Size
+[ ] **Look at the code and consider who's the user of this component**: The user of the
+example I'm showing in this component is clearly a end user, that interacts with the
+component using the browser and a mouse or their finger (in case they're in a mobile
+device). But sometimes, you may be testing Redux actions or other things like that,
+and thus, you need to create your tests using a different paradigm.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Making good tests increases the confidence level on your code.
 
-### Making a Progressive Web App
+## References
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [Testing Implementation Details](https://kentcdodds.com/blog/testing-implementation-details/) by Kent C. Dodds
+- [Avoid the test user](https://kentcdodds.com/blog/avoid-the-test-user/) by Kent C. Dodds
+- [React Test Renderer](https://reactjs.org/docs/test-renderer.html) documentation
+- [Guiding Principles](https://testing-library.com/docs/guiding-principles) by React Testing Library
