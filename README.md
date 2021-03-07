@@ -62,19 +62,19 @@ _in the [tests folder](src/components/Accordion/__tests__/)_
 
 ## Testing Checklist
 
-[ ] **Which part of the codebase will be really bad if it broke?** Let's face it, not
-all parts of our application is important for the business, is testing those parts a
-correct use of your time or can you be adding value elsewhere in your application?
+- [ ] **Which part of the codebase will be really bad if it broke?** Let's face it, not
+      all parts of our application is important for the business, is testing those parts a
+      correct use of your time or can you be adding value elsewhere in your application?
 
-[ ] **Reduce test cases into units**: Test individual use cases in every test case, do
-not try to pack every use case of your application into single test cases, this will make
-difficult to find the problem in case the tests case fails.
+- [ ] **Reduce test cases into units**: Test individual use cases in every test case, do
+      not try to pack every use case of your application into single test cases, this will make
+      difficult to find the problem in case the tests case fails.
 
-[ ] **Look at the code and consider who's the user of this component**: The user of the
-example I'm showing in this component is clearly a end user, that interacts with the
-component using the browser and a mouse or their finger (in case they're in a mobile
-device). But sometimes, you may be testing Redux actions or other things like that,
-and thus, you need to create your tests using a different paradigm.
+- [ ] **Look at the code and consider who's the user of this component**: The user of the
+      example I'm showing in this component is clearly a end user, that interacts with the
+      component using the browser and a mouse or their finger (in case they're in a mobile
+      device). But sometimes, you may be testing Redux actions or other things like that,
+      and thus, you need to create your tests using a different paradigm.
 
 Making good tests increases the confidence level on your code.
 
