@@ -16,7 +16,7 @@ critical functionality **correctly**.
 Most people who learned to make tests in React was taught to test the
 **implementation details** of a component, either because the people who was teaching
 it was doing that way or because that was actually the way that some libraries, such
-as (Enzyme)[https://enzymejs.github.io/enzyme/], encouraged to test the implementation
+as [Enzyme](https://enzymejs.github.io/enzyme/), encouraged to test the implementation
 details of your components.
 
 Testing implementation details means testing the internal methods or variables of our
